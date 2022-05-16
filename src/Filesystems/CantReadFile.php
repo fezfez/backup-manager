@@ -6,6 +6,6 @@ namespace Fezfez\BackupManager\Filesystems;
 
 use RuntimeException;
 
-class CandReadFile extends RuntimeException
+class CantReadFile extends RuntimeException
 {
 }

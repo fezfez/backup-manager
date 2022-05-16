@@ -12,8 +12,8 @@
     </include>
   </coverage>
   <testsuites>
-    <testsuite name="Alert">
-      <directory>spec/</directory>
+    <testsuite name="General">
+      <directory>tests/</directory>
     </testsuite>
   </testsuites>
 </phpunit>

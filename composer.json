@@ -1,5 +1,5 @@
 {
-  "name": "backup-manager/backup-manager",
+  "name": "fezfez/backup-manager",
   "description": "A framework agnostic database backup manager with user-definable procedures and support for S3, Dropbox, FTP, SFTP, and more with drivers for popular frameworks.",
   "authors": [
     {
@@ -24,12 +24,8 @@
   },
   "require-dev": {
     "doctrine/coding-standard": "^9.0.0",
-    "league/flysystem": "^3.0.19",
     "phpunit/phpunit": "^9.5.20",
     "vimeo/psalm": "^4.23.0"
-  },
-  "suggest": {
-    "league/flysystem": "league flysystem adapter"
   },
   "config": {
     "allow-plugins": {
@@ -43,7 +39,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Fezfez\\BackupManager\\Tests\\": "spec/"
+      "Fezfez\\BackupManager\\Tests\\": "tests/"
     }
   },
   "license": "MIT"

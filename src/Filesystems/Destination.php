@@ -6,16 +6,16 @@ namespace Fezfez\BackupManager\Filesystems;
 
 class Destination
 {
-    private FilesystemAdapter $destinationFilesystem;
+    private BackupManagerFilesystemAdapter $destinationFilesystem;
     private string $destinationPath;
 
-    public function __construct(FilesystemAdapter $destinationFilesystem, string $destinationPath)
+    public function __construct(BackupManagerFilesystemAdapter $destinationFilesystem, string $destinationPath)
     {
         $this->destinationFilesystem = $destinationFilesystem;
         $this->destinationPath       = $destinationPath;
     }
 
-    public function destinationFilesystem(): FilesystemAdapter
+    public function destinationFilesystem(): BackupManagerFilesystemAdapter
     {
         return $this->destinationFilesystem;
     }

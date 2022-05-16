@@ -6,8 +6,8 @@ namespace Fezfez\BackupManager;
 
 use Fezfez\BackupManager\Compressors\Compressor;
 use Fezfez\BackupManager\Databases\Database;
+use Fezfez\BackupManager\Filesystems\BackupManagerFilesystemAdapter;
 use Fezfez\BackupManager\Filesystems\Destination;
-use Fezfez\BackupManager\Filesystems\FilesystemAdapter;
 use Fezfez\BackupManager\Procedures\Backup;
 use Fezfez\BackupManager\Procedures\BackupProcedure;
 use Fezfez\BackupManager\Procedures\Restore;
@@ -39,12 +39,12 @@ class BackupManager
     }
 
     /** @param Destination[] $destinations */
-    public function backup(FilesystemAdapter $from, Database $database, array $destinations, string $localTmpPath, Compressor ...$compression): void
+    public function backup(BackupManagerFilesystemAdapter $from, Database $database, array $destinations, string $localTmpPath, Compressor ...$compression): void
     {
         $this->backupProcedure->__invoke($from, $database, $destinations, $localTmpPath, ...$compression);
     }
 
-    public function restore(FilesystemAdapter $from, FilesystemAdapter $to, string $sourcePath, Database $databaseName, Compressor ...$compression): void
+    public function restore(BackupManagerFilesystemAdapter $from, BackupManagerFilesystemAdapter $to, string $sourcePath, Database $databaseName, Compressor ...$compression): void
     {
         $this->restoreProcedure->__invoke($from, $to, $sourcePath, $databaseName, ...$compression);
     }

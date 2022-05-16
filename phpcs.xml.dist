@@ -10,7 +10,7 @@
     <arg value="nps"/>
     <file>src/</file>
 
-    <file>spec/</file>
+    <file>tests/</file>
     <rule ref="Doctrine"/>
     <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
         <exclude-pattern>src/Filesystems/LeagueFilesystemAdapater.php</exclude-pattern>

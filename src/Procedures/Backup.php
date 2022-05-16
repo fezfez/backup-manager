@@ -6,11 +6,10 @@ namespace Fezfez\BackupManager\Procedures;
 
 use Fezfez\BackupManager\Compressors\Compressor;
 use Fezfez\BackupManager\Databases\Database;
+use Fezfez\BackupManager\Filesystems\BackupManagerFilesystemAdapter;
 use Fezfez\BackupManager\Filesystems\Destination;
-use Fezfez\BackupManager\Filesystems\FilesystemAdapter;
 use Fezfez\BackupManager\ShellProcessing\ShellProcessor;
-use Fezfez\BackupManager\Tasks\Compression\CompressFile;
-use Fezfez\BackupManager\Tasks\Database\DumpDatabase;
+use Symfony\Component\Process\Process;
 
 use function basename;
 use function sprintf;
@@ -18,39 +17,35 @@ use function uniqid;
 
 class Backup implements BackupProcedure
 {
-    private DumpDatabase $dumpDatabase;
-    private CompressFile $compressFile;
+    private ShellProcessor $shellProcessor;
 
-    public function __construct(
-        DumpDatabase $dumpDatabase,
-        CompressFile $compressFile,
-    ) {
-        $this->dumpDatabase = $dumpDatabase;
-        $this->compressFile = $compressFile;
+    public function __construct(ShellProcessor $shellProcessor)
+    {
+        $this->shellProcessor = $shellProcessor;
     }
 
     public static function create(): self
     {
-        return new self(
-            new DumpDatabase(new ShellProcessor()),
-            new CompressFile()
-        );
+        return new self(new ShellProcessor());
     }
 
     /** @param Destination[] $destinations */
-    public function __invoke(FilesystemAdapter $from, Database $database, array $destinations, string $localTmpPath, Compressor ...$compressor): void
+    public function __invoke(BackupManagerFilesystemAdapter $localFileSystem, Database $database, array $destinations, string $localTmpPath, Compressor ...$compressorList): void
     {
         $tmpPath = sprintf('%s/%s', $localTmpPath, uniqid());
 
-        $this->dumpDatabase->__invoke($database, $tmpPath);
-        $filePath = $this->compressFile->__invoke($tmpPath, ...$compressor);
+        $this->shellProcessor->__invoke(Process::fromShellCommandline($database->getDumpCommandLine($tmpPath)));
+
+        foreach ($compressorList as $compressor) {
+            $tmpPath = $compressor->compress($tmpPath);
+        }
 
         // upload the archive
         foreach ($destinations as $destination) {
-            $destination->destinationFilesystem()->writeStream($destination->destinationPath(), $from->readStream(basename($filePath)));
+            $destination->destinationFilesystem()->writeStream($destination->destinationPath(), $localFileSystem->readStream(basename($tmpPath)));
         }
 
         // cleanup the local archive
-        $from->delete(basename($filePath));
+        $localFileSystem->delete(basename($tmpPath));
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Fezfez\BackupManager\Filesystems;
 
-interface FilesystemAdapter
+interface BackupManagerFilesystemAdapter
 {
     public function readStream(string $path): BackupManagerRessource;
 
