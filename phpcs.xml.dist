@@ -9,6 +9,10 @@
     <!-- Ignore warnings, show progress of the run and show sniff names -->
     <arg value="nps"/>
     <file>src/</file>
+
     <file>spec/</file>
     <rule ref="Doctrine"/>
+    <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
+        <exclude-pattern>src/Filesystems/LeagueFilesystemAdapater.php</exclude-pattern>
+    </rule>
 </ruleset>

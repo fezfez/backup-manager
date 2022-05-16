@@ -8,14 +8,9 @@ use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemAdapter as LeagueV3;
 use League\Flysystem\FilesystemException;
 
-use function class_exists;
 use function sprintf;
 
-if (! class_exists(LeagueV3::class)) {
-    return;
-}
-
-class LeagueFilesystemAdapaterV3 implements FilesystemAdapter
+class LeagueFilesystemAdapater implements FilesystemAdapter
 {
     private Filesystem $fileSysteme;
 
