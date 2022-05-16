@@ -4,16 +4,21 @@ declare(strict_types=1);
 
 namespace Fezfez\BackupManager\Filesystems;
 
-use League\Flysystem\Adapter\AbstractAdapter;
+use League\Flysystem\Adapter\AbstractAdapter as LeagueV1;
 use League\Flysystem\Filesystem;
 
+use function class_exists;
 use function sprintf;
 
-class LeagueFilesystemAdapater implements FilesystemAdapter
+if (! class_exists(LeagueV1::class)) {
+    return;
+}
+
+class LeagueFilesystemAdapaterV1 implements FilesystemAdapter
 {
     private Filesystem $fileSysteme;
 
-    public function __construct(AbstractAdapter $adapter)
+    public function __construct(LeagueV1 $adapter)
     {
         $this->fileSysteme = new Filesystem($adapter);
     }

@@ -55,7 +55,7 @@ infection: dup
 # Analyse
 
 static:
-	$(BASE) ./vendor/bin/psalm $(COMMAND_ARGS)
+	$(BASE) ./vendor/bin/psalm --show-info=true $(COMMAND_ARGS)
 
 cs:
 	$(BASE) php -d memory_limit=-1 ./vendor/bin/phpcs $(COMMAND_ARGS)
