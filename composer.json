@@ -20,7 +20,7 @@
   ],
   "require": {
     "php":  "~8.0.0 || ~8.1.0",
-    "symfony/process": "^v5.4.8 || ^6.0.8"
+    "symfony/process": "^5.4.11"
   },
   "require-dev": {
     "doctrine/coding-standard": "^9.0.0",
