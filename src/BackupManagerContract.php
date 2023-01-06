@@ -17,7 +17,6 @@ interface BackupManagerContract
         LocalFilesystemAdapter $localFileSystem,
         Database $database,
         array $destinations,
-
         Compressor ...$compression,
     ): void;
 
