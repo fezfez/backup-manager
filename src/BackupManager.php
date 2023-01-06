@@ -38,6 +38,7 @@ class BackupManager implements BackupManagerContract
         LocalFilesystemAdapter $localFileSystem,
         Database $database,
         array $destinations,
+
         Compressor ...$compression,
     ): void {
         $this->backupProcedure->__invoke($localFileSystem, $database, $destinations, ...$compression);
